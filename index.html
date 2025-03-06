@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sergio Pérez - Portfolio de Proyectos</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+        </label>
+        <em>Modo Oscuro</em>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1>Sergio Pérez</h1>
+            <p class="subtitle">Desarrollador & Creador</p>
+            <div class="social-links">
+                <a href="https://github.com/serper" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/tulinkedin" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:bracera_prometido7g@icloud.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="container">
+        <h2>Sobre mí</h2>
+        <p>¡Hola! Soy desarrollador de software apasionado por la tecnología y la innovación. Aquí podrás encontrar algunos de los proyectos en los que he trabajado.</p>
+    </section>
+
+    <section id="projects" class="container">
+        <h2>Mis Proyectos</h2>
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <div id="tech-filters" class="tech-filters">
+                <!-- Se llenará dinámicamente con JavaScript -->
+            </div>
+        </div>
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Cargando proyectos...</p>
+        </div>
+        <div id="projects-container" class="projects-grid">
+            <!-- Proyectos se cargarán aquí dinámicamente -->
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> Sergio Pérez. Creado con <i class="fas fa-heart"></i></p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
