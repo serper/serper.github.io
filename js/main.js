@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </a>
                         ${repo.homepage ? 
                             `<a href="${repo.homepage}" target="_blank">
-                                <i class="fas fa-external-link-alt"></i> Demo
+                                <i class="fas fa-external-link-alt"></i> Documentation
                             </a>` : ''}
                     </div>
                 </div>
