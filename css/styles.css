@@ -9,7 +9,7 @@
     --transition: all 0.3s ease;
 }
 
-/* Tema oscuro */
+/* Dark theme */
 .dark-theme {
     --primary-color: #64b5f6;
     --secondary-color: #42a5f5;
@@ -39,7 +39,7 @@ body {
     padding: 0 20px;
 }
 
-/* Switch para tema oscuro */
+/* Switch for dark theme */
 .theme-switch-wrapper {
     display: flex;
     align-items: center;
@@ -134,7 +134,7 @@ header h1 {
     margin-bottom: 20px;
 }
 
-.social-links {
+social-links {
     margin-top: 20px;
 }
 
@@ -150,7 +150,7 @@ header h1 {
     transform: translateY(-5px);
 }
 
-/* Secciones */
+/* Sections */
 section {
     padding: 60px 0;
 }
@@ -177,7 +177,7 @@ h2::after {
     transform: translateX(-50%);
 }
 
-/* Filtros */
+/* Filters */
 .filter-container {
     display: flex;
     justify-content: center;
@@ -207,7 +207,7 @@ h2::after {
     justify-content: center;
 }
 
-/* Proyectos */
+/* Projects */
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

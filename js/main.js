@@ -1,18 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Variables de configuración
-    const username = 'serper'; // Tu nombre de usuario de GitHub
+    // Configuration variables
+    const username = 'serper'; // Your GitHub username
     const projectsContainer = document.getElementById('projects-container');
     const loading = document.getElementById('loading');
     const techFilters = document.getElementById('tech-filters');
     const yearElement = document.getElementById('year');
     
-    // Actualizar año actual en el footer
+    // Update current year in footer
     yearElement.textContent = new Date().getFullYear();
 
-    // Toggle para el tema oscuro
+    // Toggle for dark theme
     const themeToggle = document.getElementById('checkbox');
     
-    // Comprobar preferencia de tema guardada
+    // Check saved theme preference
     if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-theme');
         themeToggle.checked = true;
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Función para detectar y extraer tecnologías del README o descripción
+    // Function to detect and extract technologies from README or description
     function detectTechnologies(readme, description) {
         const techKeywords = {
             'javascript': ['javascript', 'js', 'node', 'react', 'vue', 'angular', 'nextjs', 'typescript', 'ts'],
@@ -62,47 +62,47 @@ document.addEventListener('DOMContentLoaded', function() {
         return Array.from(technologies);
     }
 
-    // Función para obtener el contenido del README
+    // Function to get README content
     async function getReadmeContent(repo) {
         try {
             const response = await fetch(`https://api.github.com/repos/${username}/${repo}/readme`);
             if (!response.ok) return '';
             
             const data = await response.json();
-            // Decodificar el contenido en Base64
+            // Decode Base64 content
             return atob(data.content);
         } catch (error) {
-            console.warn(`No se pudo obtener el README para ${repo}:`, error);
+            console.warn(`Could not get README for ${repo}:`, error);
             return '';
         }
     }
 
-    // Función para obtener repositorios
+    // Function to get repositories
     async function fetchRepos() {
         try {
             loading.style.display = 'block';
             const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc`);
             const repos = await response.json();
             
-            // Filtrar repositorios para excluir el propio repositorio de GitHub Pages
+            // Filter repositories to exclude the GitHub Pages repository itself
             const filteredRepos = repos.filter(repo => {
                 return !repo.fork && !repo.name.includes('.github.io');
             });
             
-            // Procesar repositorios para mostrarlos
+            // Process repositories for display
             const allTechnologies = new Set();
             const processedRepos = [];
             
-            for (const repo of filteredRepos.slice(0, 12)) { // Limitamos a los 12 más recientes
+            for (const repo of filteredRepos.slice(0, 12)) { // Limit to 12 most recent
                 const readme = await getReadmeContent(repo.name);
                 const technologies = detectTechnologies(readme, repo.description || '');
                 
-                // Añadir tecnologías al conjunto global
+                // Add technologies to the global set
                 technologies.forEach(tech => allTechnologies.add(tech));
                 
                 processedRepos.push({
                     name: repo.name,
-                    description: repo.description || 'No hay descripción disponible',
+                    description: repo.description || 'No description available',
                     homepage: repo.homepage,
                     html_url: repo.html_url,
                     technologies,
@@ -111,30 +111,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
             
-            // Renderizar filtros de tecnología
+            // Render technology filters
             renderTechFilters(Array.from(allTechnologies));
             
-            // Renderizar proyectos
+            // Render projects
             renderProjects(processedRepos);
             
             loading.style.display = 'none';
             
-            // Configurar filtros
+            // Setup filters
             setupFilters(processedRepos);
             
         } catch (error) {
-            console.error("Error al cargar repositorios:", error);
+            console.error("Error loading repositories:", error);
             loading.style.display = 'none';
             projectsContainer.innerHTML = `
                 <div class="error-message">
-                    <p>💔 Ocurrió un error al cargar los proyectos.</p>
-                    <p>Por favor, inténtalo de nuevo más tarde.</p>
+                    <p>💔 An error occurred while loading projects.</p>
+                    <p>Please try again later.</p>
                 </div>
             `;
         }
     }
 
-    // Función para renderizar filtros de tecnología
+    // Function to render technology filters
     function renderTechFilters(technologies) {
         technologies.sort();
         technologies.forEach(tech => {
@@ -146,14 +146,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Función para renderizar proyectos
+    // Function to render projects
     function renderProjects(repos) {
         projectsContainer.innerHTML = '';
         
         if (repos.length === 0) {
             projectsContainer.innerHTML = `
                 <div class="no-projects">
-                    <p>No se encontraron proyectos que coincidan con los filtros.</p>
+                    <p>No projects found matching the filters.</p>
                 </div>
             `;
             return;
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     <div class="project-links">
                         <a href="${repo.html_url}" target="_blank">
-                            <i class="fab fa-github"></i> Repositorio
+                            <i class="fab fa-github"></i> Repository
                         </a>
                         ${repo.homepage ? 
                             `<a href="${repo.homepage}" target="_blank">
@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Función para configurar filtros
+    // Function to setup filters
     function setupFilters(allRepos) {
         const filterButtons = document.querySelectorAll('.filter-btn');
         
@@ -200,11 +200,11 @@ document.addEventListener('DOMContentLoaded', function() {
             button.addEventListener('click', () => {
                 const filter = button.dataset.filter;
                 
-                // Actualizar clase activa
+                // Update active class
                 document.querySelector('.filter-btn.active').classList.remove('active');
                 button.classList.add('active');
                 
-                // Filtrar proyectos
+                // Filter projects
                 if (filter === 'all') {
                     renderProjects(allRepos);
                 } else {
@@ -217,6 +217,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Iniciar la carga de repositorios
+    // Start loading repositories
     fetchRepos();
 });
